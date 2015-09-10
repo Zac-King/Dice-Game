@@ -5,9 +5,12 @@ public class Player : MonoBehaviour
 {
     public int diceCount;
     public GameObject diePrefab;
+    public GameObject myStash;
 
     private bool outOfGame;     // is the player still in the Game
-    private List<GameObject> dice;
+
+    [SerializeField]
+    private List<GameObject> dice = new List<GameObject>();
 
 
     [ContextMenu("Populate Player's Stash")]
@@ -23,10 +26,9 @@ public class Player : MonoBehaviour
     [ContextMenu("Destroy List")]
     void ClearDice()
     {
-        for (int i = 0; i < dice.Count; i++)
-        {
-            DestroyImmediate(dice[i]);
-        }
+        print("clearing list");
+        foreach (GameObject go in dice)
+            DestroyImmediate(go);
 
         dice.Clear();
     }
@@ -36,11 +38,13 @@ public class Player : MonoBehaviour
     {
         print("Reroll Hit");
         //rerolls all the remaining Dice
-        for (int i = 0; i < dice.Count; i++)
-        {
-            dice[i].GetComponent<Die>().Roll();
-            print("Hit Loop");
-        }
+        foreach (GameObject go in dice)
+            go.GetComponent<Die>().Roll();
+        //for (int i = 0; i < dice.Count; i++)
+        //{
+        //    dice[i].GetComponent<Die>().Roll();
+        //    print("Hit Loop");
+        //}
 
         // Print Loop for Test
         for (int j = 0; j < dice.Count; j++)
