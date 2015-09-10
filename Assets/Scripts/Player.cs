@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
         for (int i = 0; i < diceCount; i++)
         {
             GameObject go = Instantiate(diePrefab);
+            go.transform.parent = myStash.transform;
+            go.transform.position = new Vector3(Random.Range(-5,5), 1, Random.Range(-5, 5));
             dice.Add(go);
         }
     }
@@ -31,6 +33,12 @@ public class Player : MonoBehaviour
             DestroyImmediate(go);
 
         dice.Clear();
+    }
+
+   void Start()
+    {
+        foreach (GameObject go in dice)
+            go.GetComponent<Die>().Roll();
     }
 
 
